@@ -1,0 +1,54 @@
+{
+  "name": "Berita Sepak Bola",
+  "short_name": "BeBo",
+  "description": "Situs Berita Sepak Bola",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#eb407a",
+  "theme_color": "#eb407a",
+  "gcm_sender_id": "258443339909",
+  "icons": [
+    {
+      "src": "/images/icon/icons-512.svg",
+      "type": "image/svg",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/icon/icons-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/icon/icons-192.svg",
+      "type": "image/svg",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/icon/icons-144.png",
+      "type": "image/png",
+      "sizes": "144x144",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/icon/icons-96.svg",
+      "type": "image/svg",
+      "sizes": "96x96",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/icon/icons-72.svg",
+      "type": "image/svg",
+      "sizes": "72x72",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/icon/icons-48.svg",
+      "type": "image/svg",
+      "sizes": "48x48",
+      "purpose": "any maskable"
+    }
+  ]
+}
