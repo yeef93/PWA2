@@ -29,13 +29,13 @@ function error(error) {
 }
 
 // Blok kode untuk melakukan request data json
-var getteam = "competitions/2021/teams/";
-function getTeams() {
+const getteam = `${base_url}competitions/2021/teams/`;
+function getTeams(getteam) {
   if ('caches' in window) {
-    caches.match(base_url + getteam, API_TOKEN).then(function (response) {
+    caches.match(getteam, API_TOKEN).then(function (response) {
       if (response) {
         response.json().then(function (data) {
-          var allteamHTML = "";
+          let allteamHTML = "";
           data.teams.forEach(function (team) {
             allteamHTML += `                  
             <div class="container">
@@ -61,12 +61,12 @@ function getTeams() {
     })
   }
 
-  fetch(base_url + getteam, API_TOKEN)
+  fetch(getteam, API_TOKEN)
     .then(status)
     .then(json)
     .then(function (data) {
       // Objek/array JavaScript dari response.json() masuk lewat data.
-      var allteamHTML = "";
+      let allteamHTML = "";
       data.teams.forEach(function (team) {
         allteamHTML += `       
         <div class="container">
@@ -93,14 +93,14 @@ function getTeams() {
 }
 
 // kode get data klasemen la liga
-var getKlasemen = "competitions/2021/standings/";
+const getKlasemen = "competitions/2021/standings/";
 function getAllKlasemen() {
   if ('caches' in window) {
-    caches.match(base_url + getKlasemen, API_TOKEN).then(function (response) {
+    caches.match(`${base_url}${getKlasemen}`, API_TOKEN).then(function (response) {
       if (response) {
         response.json().then(function (data) {
-          var winner = data.standings[0];
-          var klasemenHTML = "";
+          let winner = data.standings[0];
+          let klasemenHTML = "";
           winner.table.forEach(function (data) {
             klasemenHTML += `                      
                     <tr>                      
@@ -122,13 +122,13 @@ function getAllKlasemen() {
     })
   }
 
-  fetch(base_url + getKlasemen, API_TOKEN)
+  fetch(`${base_url}${getKlasemen}`, API_TOKEN)
     .then(status)
     .then(json)
     .then(function (data) {
       // Objek/array JavaScript dari response.json() masuk lewat data.
-      var winner = data.standings[0];
-      var klasemenHTML = "";
+      let winner = data.standings[0];
+      let klasemenHTML = "";
       winner.table.forEach(function (data) {
         klasemenHTML += `            
             <tr>
@@ -152,18 +152,18 @@ function getAllKlasemen() {
 function getAllTeamsById() {
   return new Promise(function (resolve, reject) {
     // Ambil nilai query parameter (?id=)
-    var urlParams = new URLSearchParams(window.location.search);
-    var idParam = urlParams.get("id");
+    let urlParams = new URLSearchParams(window.location.search);
+    let idParam = urlParams.get("id");
     if ("caches" in window) {
-      caches.match(base_url + "teams/" + idParam, API_TOKEN).then(function (response) {
+      caches.match(`${base_url}teams/${idParam}`, API_TOKEN).then(function (response) {
         if (response) {
           response.json().then(function (data) {
-            var allteambyidHTML = `         
+            let allteambyidHTML = `         
             <div class="row">
                 <div class="col s12 m5">
                   <div class="card" style="margin-top:50px;"> 
                     <div class="card-image waves-effect waves-block waves-light">                         
-                      <img class="responsive-img" style="margin-top:20px;" src="${data.crestUrl}"/>
+                      <img class="responsive-img" style="margin-top:20px;" alt="logo" src="${data.crestUrl}"/>
                     </div>                      
                     <div class="card-content pink lighten-3" style="margin-top:15px;">                         
                       <span class="card-title truncate center-align" style="font-weight:bold; font-size:30px;">${data.name}</span>
@@ -195,17 +195,17 @@ function getAllTeamsById() {
       });
     }
 
-    fetch(base_url + "teams/" + idParam, API_TOKEN)
+    fetch(`${base_url}teams/${idParam}`, API_TOKEN)
       .then(status)
       .then(json)
       .then(function (data) {
         // Objek JavaScript dari response.json() masuk lewat variabel data.     
-        var allteambyidHTML = ` 
+        let allteambyidHTML = ` 
         <div class="row">
                 <div class="col s12 m5">
                   <div class="card" style="margin-top:50px;"> 
                     <div class="card-image waves-effect waves-block waves-light">                         
-                      <img class="responsive-img" style="margin-top:20px;" src="${data.crestUrl}"/>
+                      <img class="responsive-img" style="margin-top:20px;" alt="logo" src="${data.crestUrl}"/>
                     </div>                      
                     <div class="card-content pink lighten-3" style="margin-top:15px;">                         
                       <span class="card-title truncate center-align" style="font-weight:bold; font-size:30px;">${data.name}</span>
@@ -240,17 +240,17 @@ function getAllTeamsById() {
 function getTeamById() {
   return new Promise(function (resolve, reject) {
     // Ambil nilai query parameter (?id=)
-    var urlParams = new URLSearchParams(window.location.search);
-    var idParam = urlParams.get("id");
+    let urlParams = new URLSearchParams(window.location.search);
+    let idParam = urlParams.get("id");
 
     if ("caches" in window) {
-      caches.match(base_url + "team/" + idParam).then(function (response) {
+      caches.match(`${base_url}teams/${idParam}`).then(function (response) {
         if (response) {
           response.json().then(function (data) {
-            var articleHTML = `
+            let teamHTML = `
             <div class="card">
               <div class="card-image waves-effect waves-block waves-light">
-                <img src="${data.result.cover}" />
+                <img alt="logo" src="${data.result.cover}" />
               </div>
               <div class="card-content">
                 <span class="card-title">${data.result.post_title}</span>
@@ -259,7 +259,7 @@ function getTeamById() {
             </div>
           `;
             // Sisipkan komponen card ke dalam elemen dengan id #content
-            document.getElementById("body-content").innerHTML = articleHTML;
+            document.getElementById("body-content").innerHTML = teamHTML;
 
             // Kirim objek data hasil parsing json agar bisa disimpan ke indexed db
             resolve(data);
@@ -267,17 +267,17 @@ function getTeamById() {
         }
       });
     }
-    fetch(base_url + "team/" + idParam)
+    fetch(`${base_url}teams/${idParam}`)
       .then(status)
       .then(json)
       .then(function (data) {
         // Objek JavaScript dari response.json() masuk lewat variabel data.
         console.log(data);
         // Menyusun komponen card artikel secara dinamis
-        var articleHTML = `
+        let teamHTML = `
           <div class="card">
             <div class="card-image waves-effect waves-block waves-light">
-              <img src="${data.result.cover}" />
+              <img alt="logo" src="${data.result.cover}" />
             </div>
             <div class="card-content">
               <span class="card-title">${data.result.post_title}</span>
@@ -286,7 +286,7 @@ function getTeamById() {
           </div>
         `;
         // Sisipkan komponen card ke dalam elemen dengan id #content
-        document.getElementById("body-content").innerHTML = articleHTML;
+        document.getElementById("body-content").innerHTML = teamHTML;
         // Kirim objek data hasil parsing json agar bisa disimpan ke indexed db
         resolve(data);
       });
@@ -294,10 +294,10 @@ function getTeamById() {
 }
 
 //menyimpan artikel
-function getSavedArticles() {
+function getSavedTeams() {
   getAll().then(function (data) {
     console.log(data);
-    var teamHTML = `<div class="row" style="margin-bottom:50px;">
+    let teamHTML = `<div class="row" style="margin-bottom:50px;">
                         <div class="card-panel teal darken-3" style="height: auto">
                             <h4 class="center-align" style="margin-top:0; color: white;">TIM FAVORIT</h4>          
                         </div>  
@@ -310,7 +310,7 @@ function getSavedArticles() {
                 <div class="col s12 m5">
                   <div class="card" style="margin-top:10px;"> 
                     <div class="card-image waves-effect waves-block waves-light">                         
-                      <img class="responsive-img" style="margin-top:20px;" src="${team.crestUrl}"/>
+                      <img class="responsive-img" style="margin-top:20px;" alt="logo" src="${team.crestUrl}"/>
                     </div>                      
                     <div class="card-content pink lighten-3" style="margin-top:15px;">                         
                       <span class="card-title truncate center-align" style="font-weight:bold; font-size:30px;">${team.name}</span>
@@ -344,25 +344,25 @@ function getSavedArticles() {
         let id = event.target.id;
         console.log(id)
         deleteTeam(id).then(() => {
-          getSavedArticles();        
+          getSavedTeams();        
         }) 
       })
     }
   });
 }
 
-//  Menyimpan artikel By.ID
-function getSavedArticleById() {
-  var urlParams = new URLSearchParams(window.location.search);
-  var idParam = urlParams.get("id");
+//  Menyimpan Tim By.ID
+function getSavedTeamById() {
+  let urlParams = new URLSearchParams(window.location.search);
+  let idParam = urlParams.get("id");
 
   getById(parseInt(idParam)).then(function (data) {
     console.log(data)
     teambyidHTML = '';
-    var teambyidHTML = `         
+    let teambyidHTML = `         
               <div class="card" style="margin-top:50px;"> 
                 <div class="card-image waves-effect waves-block waves-light">                         
-                  <img class="responsive-img" style="margin-top:20px;" src="${data.crestUrl}"/>
+                  <img class="responsive-img" style="margin-top:20px;" alt="logo" src="${data.crestUrl}"/>
                 </div>                      
                 <div class="card-content pink lighten-3" style="margin-top:15px;">                         
                   <span class="card-title truncate" style="font-weight:bold; font-size:30px;">${data.name}</span>

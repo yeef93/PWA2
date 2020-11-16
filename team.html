@@ -6,7 +6,8 @@
   <title>Berita Sepak Bola</title>
   <meta name="description" content="Berita Sepak Bola" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="css/materialize.css" />
+  <link rel="stylesheet" href="css/materialize.css" />  
+  <link rel="stylesheet" href="css/style.css" />
   <link rel="manifest" href="/manifest.json" />
   <meta name="theme-color" content="#15202b" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
@@ -44,15 +45,15 @@
   </div>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      var urlParams = new URLSearchParams(window.location.search);
-      var isFromSaved = urlParams.get("saved");
-      var save = document.getElementById("save");
+      const urlParams = new URLSearchParams(window.location.search);
+      const isFromSaved = urlParams.get("saved");
+      const save = document.getElementById("save");
 
       if (isFromSaved) {
         // Hide fab jika dimuat dari indexed db
         save.style.display = 'none';
         // ambil artikel lalu tampilkan
-        getSavedArticleById();
+        getSavedTeamById();
       } else {
         var item = getAllTeamsById();
       }
@@ -61,6 +62,7 @@
         console.log("Tombol FAB di klik.");
         item.then(function (data) {
           saveForLater(data);
+          save.style.display = 'none';
         });
       };
     });

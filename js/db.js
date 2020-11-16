@@ -1,16 +1,16 @@
 const dbPromised = idb.open("bebo", 25, function (upgradeDb) {
-  const articlesObjectStore = upgradeDb.createObjectStore("articles", {
+  const teamsObjectStore = upgradeDb.createObjectStore("teams", {
     keyPath: "id"
   });
-  articlesObjectStore.createIndex("teams_id", "id", { unique: false });
+  teamsObjectStore.createIndex("teams_id", "id", { unique: false });
 });
 
 function saveForLater(data) {
   console.log(data)
   dbPromised
     .then(function (db) {
-      const tx = db.transaction("articles", "readwrite");
-      const store = tx.objectStore("articles");
+      const tx = db.transaction("teams", "readwrite");
+      const store = tx.objectStore("teams");
       store.put(data);
       console.log(data)
       return tx.complete;
@@ -26,8 +26,8 @@ function getAll() {
   return new Promise(function (resolve, reject) {
     dbPromised
       .then(function (db) {
-        const tx = db.transaction("articles", "readonly");
-        const store = tx.objectStore("articles");
+        const tx = db.transaction("teams", "readonly");
+        const store = tx.objectStore("teams");
         return store.getAll();
       })
       .then(function (data) {
@@ -40,8 +40,8 @@ function getById(id) {
   return new Promise(function (resolve, reject) {
     dbPromised
       .then(function (db) {
-        const tx = db.transaction("articles", "readonly");
-        const store = tx.objectStore("articles");
+        const tx = db.transaction("teams", "readonly");
+        const store = tx.objectStore("teams");
         return store.get(parseInt(id));
       })
       .then(function (data) {
@@ -54,8 +54,8 @@ function deleteTeam(id) {
   console.log(id)
   dbPromised.
   then(function (db) {
-    var tx = db.transaction("articles", "readwrite");
-    var store = tx.objectStore("articles");
+    const tx = db.transaction("teams", "readwrite");
+    const store = tx.objectStore("teams");
     store.delete(parseInt(id));
     return tx.complete;
   }).then(function () {
